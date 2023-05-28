@@ -16,4 +16,14 @@ describe('Home View', () => {
     const { getByRole } = await mount();
     expect(getByRole('heading', { name: 'Bordiple' })).toBeInTheDocument();
   });
+
+  it('should initialize with a form pre-filled with three borders', async () => {
+    const { getByLabelText } = await mount();
+    expect(getByLabelText('border #1 width').value).toEqual('10');
+    expect(getByLabelText('border #1 color').value).toEqual('#dc424e');
+    expect(getByLabelText('border #2 width').value).toEqual('10');
+    expect(getByLabelText('border #2 color').value).toEqual('#f48554');
+    expect(getByLabelText('border #3 width').value).toEqual('10');
+    expect(getByLabelText('border #3 color').value).toEqual('#fdbf59');
+  });
 });
