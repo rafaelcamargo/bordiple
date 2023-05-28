@@ -26,4 +26,13 @@ describe('Home View', () => {
     expect(getByLabelText('border #3 width').value).toEqual('10');
     expect(getByLabelText('border #3 color').value).toEqual('#fdbf59');
   });
+
+  it('should render a preview element containing the borders set in the form', async () => {
+    const { getByTitle } = await mount();
+    expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
+      '0 0 0 10px #DC424E',
+      '0 0 0 20px #F48554',
+      '0 0 0 30px #FDBF59'
+    ].join(', '));
+  });
 });
