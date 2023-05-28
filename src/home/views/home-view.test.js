@@ -35,4 +35,11 @@ describe('Home View', () => {
       '0 0 0 30px #FDBF59'
     ].join(', '));
   });
+
+  it('should show the css code related to the generated preview', async () => {
+    const { container } = await mount();
+    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
+      'margin: 30px; box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 30px #FDBF59;'
+    );
+  });
 });
