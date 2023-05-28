@@ -12,6 +12,7 @@
   "author": "Rafael Camargo <hello@rafaelcamargo.com>",
   "license": "MIT",
   "dependencies": {
+    "@glorious/taslonic-react": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.4.4"
