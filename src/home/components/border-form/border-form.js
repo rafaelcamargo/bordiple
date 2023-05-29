@@ -10,6 +10,11 @@ export const BorderForm = () => {
   const removeBorder = borderIndex => {
     setBorders(borders.filter((_, index) => index !== borderIndex));
   };
+  const editBorder = ({ target: { name, value } }, borderIndex) => {
+    setBorders(borders.map((border, index) => {
+      return index === borderIndex ? { ...border, [name]: value } : border;
+    }));
+  };
   return (
     <Form>
       {
@@ -21,6 +26,7 @@ export const BorderForm = () => {
                 name={WIDTH_INPUT_NAME}
                 value={border[WIDTH_INPUT_NAME]}
                 aria-label={buildInputLabel(WIDTH_INPUT_NAME, index)}
+                onChange={evt => editBorder(evt, index)}
                 block
               />
             </Col>
@@ -30,6 +36,7 @@ export const BorderForm = () => {
                 name={COLOR_INPUT_NAME}
                 value={border[COLOR_INPUT_NAME]}
                 aria-label={buildInputLabel(COLOR_INPUT_NAME, index)}
+                onChange={evt => editBorder(evt, index)}
                 block
               />
             </Col>

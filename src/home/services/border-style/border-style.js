@@ -1,6 +1,6 @@
 export const buildStyle = borders => {
   return borders.reduce(({ css, depth }, border) => {
-    const thickness = border.width + depth;
+    const thickness = parseInt(border.width) + depth;
     return {
       css: {
         margin: `${thickness}px`,

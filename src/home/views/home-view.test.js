@@ -1,4 +1,4 @@
-import { asyncMount, userEvent, RouterMock, waitFor } from '@src/base/services/testing';
+import { asyncMount, userEvent, fireEvent, RouterMock } from '@src/base/services/testing';
 import { HomeView } from './home-view';
 
 describe('Home View', () => {
@@ -45,13 +45,11 @@ describe('Home View', () => {
 
   it('should optionally remove a border', async () => {
     const { user, container, getByLabelText, getByTitle } = await mount();
-    user.click(getByLabelText('delete border #1'));
-    await waitFor(() => {
-      expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
-        '0 0 0 10px #F48554',
-        '0 0 0 20px #FDBF59'
-      ].join(', '));
-    });
+    await user.click(getByLabelText('delete border #1'));
+    expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
+      '0 0 0 10px #F48554',
+      '0 0 0 20px #FDBF59'
+    ].join(', '));
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
       'margin: 20px; box-shadow: 0 0 0 10px #F48554, 0 0 0 20px #FDBF59;'
     );
@@ -59,20 +57,41 @@ describe('Home View', () => {
 
   it('should optionally add a border', async () => {
     const { user, container, getByRole, getByLabelText, getByTitle } = await mount();
-    user.click(getByRole('button', { name: 'Add Border' }));
-    await waitFor(() => {
-      expect(getByLabelText('border #4 width').value).toEqual('10');
-      expect(getByLabelText('border #4 color').value).toEqual('#4affff');
-    });
+    await user.click(getByRole('button', { name: 'Add Border' }));
+    expect(getByLabelText('border #4 width').value).toEqual('10');
+    expect(getByLabelText('border #4 color').value).toEqual('#4affff');
     expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
       '0 0 0 10px #DC424E',
       '0 0 0 20px #F48554',
       '0 0 0 30px #FDBF59',
-      '0 0 0 40px #4AFFFF',
+      '0 0 0 40px #4AFFFF'
     ].join(', '));
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
       'margin: 40px;',
       'box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 30px #FDBF59, 0 0 0 40px #4AFFFF;'
+    ].join(' '));
+  });
+
+  it('should optionally edit a border', async () => {
+    const { user, container, getByLabelText, getByTitle } = await mount();
+    const borderWidthInput = getByLabelText('border #3 width');
+    const borderColorInput = getByLabelText('border #3 color');
+    await user.clear(borderWidthInput);
+    await user.type(borderWidthInput, '5');
+    // Used fireEvent below because userEvent doesn’t
+    // support interactions with color inputs:
+    // https://github.com/testing-library/user-event/issues/423
+    fireEvent.input(borderColorInput, { target: { name: 'color', value: '#333333' }});
+    expect(getByLabelText('border #3 width').value).toEqual('5');
+    expect(getByLabelText('border #3 color').value).toEqual('#333333');
+    expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
+      '0 0 0 10px #DC424E',
+      '0 0 0 20px #F48554',
+      '0 0 0 25px #333333'
+    ].join(', '));
+    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
+      'margin: 25px;',
+      'box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 25px #333333;'
     ].join(' '));
   });
 });
