@@ -1,4 +1,4 @@
-import { asyncMount, userEvent, RouterMock } from '@src/base/services/testing';
+import { asyncMount, userEvent, RouterMock, waitFor } from '@src/base/services/testing';
 import { HomeView } from './home-view';
 
 describe('Home View', () => {
@@ -40,6 +40,20 @@ describe('Home View', () => {
     const { container } = await mount();
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
       'margin: 30px; box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 30px #FDBF59;'
+    );
+  });
+
+  it('should optionally remove a border', async () => {
+    const { user, container, getByLabelText, getByTitle } = await mount();
+    user.click(getByLabelText('delete border #1'));
+    await waitFor(() => {
+      expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
+        '0 0 0 10px #F48554',
+        '0 0 0 20px #FDBF59'
+      ].join(', '));
+    });
+    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
+      'margin: 20px; box-shadow: 0 0 0 10px #F48554, 0 0 0 20px #FDBF59;'
     );
   });
 });
