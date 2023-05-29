@@ -6,6 +6,7 @@ const COLOR_INPUT_NAME = 'color';
 
 export const BorderForm = () => {
   const { borders, setBorders } = useSharedBorders();
+  const addBorder = () => setBorders([...borders, { width: 10, color: '#4AFFFF' }]);
   const removeBorder = borderIndex => {
     setBorders(borders.filter((_, index) => index !== borderIndex));
   };
@@ -43,6 +44,13 @@ export const BorderForm = () => {
           </Row>
         ))
       }
+      <Row align="center">
+        <Col xs="6">
+          <Button theme="secondary" onClick={addBorder} block>
+            Add Border
+          </Button>
+        </Col>
+      </Row>
     </Form>
   );
 };

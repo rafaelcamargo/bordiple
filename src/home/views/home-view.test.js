@@ -56,4 +56,23 @@ describe('Home View', () => {
       'margin: 20px; box-shadow: 0 0 0 10px #F48554, 0 0 0 20px #FDBF59;'
     );
   });
+
+  it('should optionally add a border', async () => {
+    const { user, container, getByRole, getByLabelText, getByTitle } = await mount();
+    user.click(getByRole('button', { name: 'Add Border' }));
+    await waitFor(() => {
+      expect(getByLabelText('border #4 width').value).toEqual('10');
+      expect(getByLabelText('border #4 color').value).toEqual('#4affff');
+    });
+    expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
+      '0 0 0 10px #DC424E',
+      '0 0 0 20px #F48554',
+      '0 0 0 30px #FDBF59',
+      '0 0 0 40px #4AFFFF',
+    ].join(', '));
+    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
+      'margin: 40px;',
+      'box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 30px #FDBF59, 0 0 0 40px #4AFFFF;'
+    ].join(' '));
+  });
 });
