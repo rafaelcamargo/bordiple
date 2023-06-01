@@ -23,5 +23,5 @@ function mapCSSAtributeKey(styleObjectKey){
 }
 
 function indentCSSValue(value){
-  return value.includes(',') ? value.split(',').map(val => `\n  ${val}`) : value;
+  return value.includes(',') ? value.split(',').map(val => `\n  ${val.toLowerCase()}`) : value.toLowerCase();
 }

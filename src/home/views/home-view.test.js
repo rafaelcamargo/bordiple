@@ -33,13 +33,13 @@ describe('Home View', () => {
       '0 0 0 10px #DC424E',
       '0 0 0 20px #F48554',
       '0 0 0 30px #FDBF59'
-    ].join(', '));
+    ].join(','));
   });
 
   it('should show the css code related to the generated preview', async () => {
     const { container } = await mount();
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
-      'margin: 30px; box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 30px #FDBF59;'
+      'margin: 30px; box-shadow: 0 0 0 10px #dc424e, 0 0 0 20px #f48554, 0 0 0 30px #fdbf59;'
     );
   });
 
@@ -50,7 +50,7 @@ describe('Home View', () => {
     expect(window.getComputedStyle(getByTitle('preview')).border).toEqual('10px solid #f48554');
     expect(window.getComputedStyle(getByTitle('preview')).outline).toEqual('10px solid #FDBF59');
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
-      'border: 10px solid #F48554; margin: 10px; outline: 10px solid #FDBF59;'
+      'border: 10px solid #f48554; margin: 10px; outline: 10px solid #fdbf59;'
     );
   });
 
@@ -64,10 +64,10 @@ describe('Home View', () => {
       '0 0 0 20px #F48554',
       '0 0 0 30px #FDBF59',
       '0 0 0 40px #4AFFFF'
-    ].join(', '));
+    ].join(','));
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
       'margin: 40px;',
-      'box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 30px #FDBF59, 0 0 0 40px #4AFFFF;'
+      'box-shadow: 0 0 0 10px #dc424e, 0 0 0 20px #f48554, 0 0 0 30px #fdbf59, 0 0 0 40px #4affff;'
     ].join(' '));
   });
 
@@ -87,10 +87,10 @@ describe('Home View', () => {
       '0 0 0 10px #DC424E',
       '0 0 0 20px #F48554',
       '0 0 0 25px #333333'
-    ].join(', '));
+    ].join(','));
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
       'margin: 25px;',
-      'box-shadow: 0 0 0 10px #DC424E, 0 0 0 20px #F48554, 0 0 0 25px #333333;'
+      'box-shadow: 0 0 0 10px #dc424e, 0 0 0 20px #f48554, 0 0 0 25px #333333;'
     ].join(' '));
   });
 });

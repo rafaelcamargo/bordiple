@@ -30,7 +30,7 @@ function buildMultiBorderStyle(borders){
         boxShadow: [
           css.boxShadow,
           `0 0 0 ${formatPixelAmount(thickness)} ${border.color}`
-        ].filter(val => !!val).join(', ')
+        ].filter(val => !!val).join(',')
       },
       depth: thickness
     };

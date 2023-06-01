@@ -35,7 +35,7 @@ describe('Border Style Service', () => {
     ];
     expect(buildStyle(borders)).toEqual({
       margin: '30px',
-      boxShadow: '0 0 0 5px #DC424E, 0 0 0 15px #F2855A, 0 0 0 30px #FDBF59'
+      boxShadow: '0 0 0 5px #DC424E,0 0 0 15px #F2855A,0 0 0 30px #FDBF59'
     });
   });
 });
