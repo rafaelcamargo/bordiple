@@ -1,10 +1,11 @@
+import './border-code.styl';
 import { useSharedBorders } from '@src/home/hooks/shared-borders/shared-borders';
 import { buildStyle } from '@src/home/services/border-style/border-style';
 
 export const BorderCode = () => {
   const { borders } = useSharedBorders();
   return (
-    <pre id="codeWrapper">
+    <pre id="codeWrapper" className="b-border-code">
       <code>{stringify(buildStyle(borders))}</code>
     </pre>
   );
