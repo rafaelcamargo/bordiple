@@ -12,12 +12,12 @@ export const BorderForm = () => {
     setBorders(borders.filter((_, index) => index !== borderIndex));
   };
   const editBorder = ({ target: { name, value } }, borderIndex) => {
-    setBorders(borders.map((border, index) => {
+    isBorderValueValid(getValidations(name), value) && setBorders(borders.map((border, index) => {
       return index === borderIndex ? { ...border, [name]: value } : border;
     }));
   };
   return (
-    <Form>
+    <Form className="b-border-form">
       {
         borders.map((border, index) => (
           <Row key={index} verticalAlignXs="center">
@@ -31,6 +31,7 @@ export const BorderForm = () => {
                 type="number"
                 name={WIDTH_INPUT_NAME}
                 value={border[WIDTH_INPUT_NAME]}
+                validations={getValidations(WIDTH_INPUT_NAME)}
                 aria-label={buildInputLabel(WIDTH_INPUT_NAME, index)}
                 onChange={evt => editBorder(evt, index)}
                 block
@@ -72,4 +73,18 @@ export const BorderForm = () => {
 
 function buildInputLabel(attributeType, borderIndex){
   return `border #${borderIndex+1} ${attributeType}`;
+}
+
+function getValidations(attr){
+  return {
+    [WIDTH_INPUT_NAME]: [
+      { isValid: val => parseInt(val) >= 0, errorMessage: 'Must be positive' }
+    ]
+  }[attr];
+}
+
+function isBorderValueValid(validations, value){
+  return !validations || validations.reduce((result, { isValid }) => {
+    return result && isValid(value);
+  }, true);
 }

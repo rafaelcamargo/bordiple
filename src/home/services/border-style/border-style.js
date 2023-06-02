@@ -10,20 +10,21 @@ function getStyleStrategy(bordersCount){
 }
 
 function buildSingleBorderStyle([{ width, color }]){
-  return { border: `${formatPixelAmount(width)} solid ${color}` };
+  return { border: `${formatPixelAmount(parseBorderWidth(width))} solid ${color}` };
 }
 
 function buildDoubleBorderStyle([ first, second ]){
+  const outlineWidth = parseBorderWidth(second.width);
   return {
     ...buildSingleBorderStyle([first]),
-    margin: formatPixelAmount(second.width),
-    outline: `${formatPixelAmount(second.width)} solid ${second.color}`
+    margin: `${formatPixelAmount(outlineWidth)}`,
+    outline: `${formatPixelAmount(outlineWidth)} solid ${second.color}`
   };
 }
 
 function buildMultiBorderStyle(borders){
   return borders.reduce(({ css, depth }, border) => {
-    const thickness = parseInt(border.width) + depth;
+    const thickness = parseBorderWidth(border.width) + depth;
     return {
       css: {
         margin: formatPixelAmount(thickness),
@@ -38,5 +39,10 @@ function buildMultiBorderStyle(borders){
 }
 
 function formatPixelAmount(width){
-  return width === 0 ? width : `${width}px`;
+  return width === 0 ? `${width}` : `${width}px`;
+}
+
+function parseBorderWidth(width){
+  const value = parseInt(width);
+  return value && value >= 0 ? value : 0;
 }
