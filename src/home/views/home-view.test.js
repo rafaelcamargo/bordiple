@@ -1,15 +1,9 @@
-import { asyncMount, userEvent, fireEvent, RouterMock, within } from '@src/base/services/testing';
+import { asyncMount, fireEvent, within } from '@src/base/services/testing';
 import { HomeView } from './home-view';
 
 describe('Home View', () => {
   async function mount(){
-    const user = userEvent.setup();
-    const result = await asyncMount(
-      <RouterMock>
-        <HomeView />
-      </RouterMock>
-    );
-    return { user, ...result };
+    return await asyncMount(<HomeView />);
   }
 
   it('should contain heading', async () => {
