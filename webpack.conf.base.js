@@ -1,3 +1,4 @@
+const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -43,6 +44,14 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: project.dist.styles.filename[env]
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname, project.source.favicon.files),
+          to: `${path.join(__dirname, project.dist.images.directory)}/[name][ext]`
+        }
+      ],
     })
   ]
 }
