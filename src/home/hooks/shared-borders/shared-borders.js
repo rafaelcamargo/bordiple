@@ -16,8 +16,8 @@ export const useSharedBorders = () => {
 
 function buildInitialBorders(){
   return [
-    { width: 10, color: '#DC424E' },
-    { width: 10, color: '#F48554' },
-    { width: 10, color: '#FDBF59' },
+    { width: 5, color: '#DC424E' },
+    { width: 5, color: '#F48554' },
+    { width: 5, color: '#FDBF59' },
   ];
 }

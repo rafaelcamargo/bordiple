@@ -6,7 +6,7 @@ const COLOR_INPUT_NAME = 'color';
 
 export const BorderForm = () => {
   const { borders, setBorders } = useSharedBorders();
-  const addBorder = () => setBorders([...borders, { width: 10, color: '#4AFFFF' }]);
+  const addBorder = () => setBorders([...borders, { width: 5, color: '#4AFFFF' }]);
   const removeBorder = borderIndex => {
     setBorders(borders.filter((_, index) => index !== borderIndex));
   };
