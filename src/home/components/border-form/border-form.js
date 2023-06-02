@@ -1,3 +1,4 @@
+import './border-form.styl';
 import { Button, Col, Input, Form, Row } from '@glorious/taslonic-react';
 import { useSharedBorders } from '@src/home/hooks/shared-borders/shared-borders';
 
@@ -19,8 +20,13 @@ export const BorderForm = () => {
     <Form>
       {
         borders.map((border, index) => (
-          <Row key={index}>
-            <Col xs="5">
+          <Row key={index} verticalAlignXs="center">
+            <Col xs="3">
+              <p className="b-border-form-id">
+                <span>Border {`#${index+1}`}</span>
+              </p>
+            </Col>
+            <Col xs="2">
               <Input
                 type="number"
                 name={WIDTH_INPUT_NAME}
@@ -40,13 +46,15 @@ export const BorderForm = () => {
                 block
               />
             </Col>
-            <Col xs="1">
-              <Button
-                aria-label={`delete border #${index+1}`}
-                onClick={() => removeBorder(index)}
-              >
-                ×
-              </Button>
+            <Col xs="2">
+              <span className="b-border-form-delete-button-wrapper">
+                <Button
+                  aria-label={`delete border #${index+1}`}
+                  onClick={() => removeBorder(index)}
+                >
+                  <span>×</span>
+                </Button>
+              </span>
             </Col>
           </Row>
         ))
