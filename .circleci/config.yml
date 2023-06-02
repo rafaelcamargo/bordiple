@@ -81,6 +81,16 @@ jobs:
       - coveralls/upload:
           verbose: true
 
+  deploy:
+    <<: *defaults
+
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Deploy
+          command: npm run deploy -- --token=$FIREBASE_TOKEN
+
 workflows:
   version: 2
 
@@ -96,3 +106,12 @@ workflows:
       - test:
           requires:
             - install
+      - deploy:
+          requires:
+            - build
+            - format
+            - test
+          filters:
+            branches:
+              only:
+                - main
