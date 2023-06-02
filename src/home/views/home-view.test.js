@@ -1,4 +1,4 @@
-import { asyncMount, userEvent, fireEvent, RouterMock } from '@src/base/services/testing';
+import { asyncMount, userEvent, fireEvent, RouterMock, within } from '@src/base/services/testing';
 import { HomeView } from './home-view';
 
 describe('Home View', () => {
@@ -92,5 +92,14 @@ describe('Home View', () => {
       'margin: 20px;',
       'box-shadow: 0 0 0 5px #dc424e, 0 0 0 10px #f48554, 0 0 0 20px #333333;'
     ].join(' '));
+  });
+
+  it('should contain credits', async () => {
+    const { container } = await mount();
+    const footer = container.querySelector('#footer');
+    expect(within(footer).getByRole('link', { name: 'Rafael Camargo' })).toHaveAttribute(
+      'href',
+      'https://rafaelcamargo.com'
+    );
   });
 });
