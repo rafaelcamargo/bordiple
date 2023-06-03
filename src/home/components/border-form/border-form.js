@@ -1,15 +1,23 @@
 import './border-form.styl';
-import { Button, Col, Input, Form, Row } from '@glorious/taslonic-react';
+import { Button, Col, Input, Form, Row, alert } from '@glorious/taslonic-react';
 import { useSharedBorders } from '@src/home/hooks/shared-borders/shared-borders';
-
-const WIDTH_INPUT_NAME = 'width';
-const COLOR_INPUT_NAME = 'color';
+import {
+  WIDTH_INPUT_NAME,
+  COLOR_INPUT_NAME,
+  isRemotionAllowed,
+  buildNoBorderAlert,
+  buildInputLabel,
+  getValidations,
+  isBorderValueValid
+} from '@src/home/services/border-form/border-form';
 
 export const BorderForm = () => {
   const { borders, setBorders } = useSharedBorders();
   const addBorder = () => setBorders([...borders, { width: 5, color: '#4AFFFF' }]);
   const removeBorder = borderIndex => {
-    setBorders(borders.filter((_, index) => index !== borderIndex));
+    return isRemotionAllowed(borders) ?
+      setBorders(borders.filter((_, index) => index !== borderIndex)) :
+      alert.open(buildNoBorderAlert());
   };
   const editBorder = ({ target: { name, value } }, borderIndex) => {
     isBorderValueValid(getValidations(name), value) && setBorders(borders.map((border, index) => {
@@ -70,21 +78,3 @@ export const BorderForm = () => {
     </Form>
   );
 };
-
-function buildInputLabel(attributeType, borderIndex){
-  return `border #${borderIndex+1} ${attributeType}`;
-}
-
-function getValidations(attr){
-  return {
-    [WIDTH_INPUT_NAME]: [
-      { isValid: val => parseInt(val) >= 0, errorMessage: 'Must be positive' }
-    ]
-  }[attr];
-}
-
-function isBorderValueValid(validations, value){
-  return !validations || validations.reduce((result, { isValid }) => {
-    return result && isValid(value);
-  }, true);
-}
