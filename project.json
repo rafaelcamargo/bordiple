@@ -12,6 +12,9 @@
     },
     "tests": {
       "files": ["src/**/*.js", "!src/**/mocks/**/*.js"]
+    },
+    "environments": {
+      "root": "environments"
     }
   },
   "dist": {

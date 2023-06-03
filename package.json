@@ -13,6 +13,7 @@
   "author": "Rafael Camargo <hello@rafaelcamargo.com>",
   "license": "MIT",
   "dependencies": {
+    "@glorious/analytics": "^0.4.0",
     "@glorious/taslonic-react": "^1.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
