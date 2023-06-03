@@ -2,7 +2,7 @@ import { act, render } from '@testing-library/react';
 export * from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-export async function pause(timeout = 0){
+export async function pause(timeout){
   await new Promise(resolve => setTimeout(resolve, timeout));
 }
 
