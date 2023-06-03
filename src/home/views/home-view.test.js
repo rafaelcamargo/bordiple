@@ -40,11 +40,13 @@ describe('Home View', () => {
   it('should optionally remove a border', async () => {
     const { user, container, getByLabelText, getByTitle } = await mount();
     await user.click(getByLabelText('delete border #1'));
-    expect(window.getComputedStyle(getByTitle('preview')).margin).toEqual('5px');
-    expect(window.getComputedStyle(getByTitle('preview')).border).toEqual('5px solid #f48554');
-    expect(window.getComputedStyle(getByTitle('preview')).outline).toEqual('5px solid #FDBF59');
+    expect(window.getComputedStyle(getByTitle('preview')).margin).toEqual('10px');
+    expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
+      '0 0 0 5px #F48554',
+      '0 0 0 10px #FDBF59'
+    ].join(','));
     expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
-      'border: 5px solid #f48554; margin: 5px; outline: 5px solid #fdbf59;'
+      'margin: 10px; box-shadow: 0 0 0 5px #f48554, 0 0 0 10px #fdbf59;'
     );
   });
 

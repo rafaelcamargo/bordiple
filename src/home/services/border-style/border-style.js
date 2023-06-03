@@ -4,22 +4,12 @@ export const buildStyle = borders => {
 
 function getStyleStrategy(bordersCount){
   return {
-    1: buildSingleBorderStyle,
-    2: buildDoubleBorderStyle
+    1: buildSingleBorderStyle
   }[bordersCount] || buildMultiBorderStyle;
 }
 
 function buildSingleBorderStyle([{ width, color }]){
   return { border: `${formatPixelAmount(parseBorderWidth(width))} solid ${color}` };
-}
-
-function buildDoubleBorderStyle([ first, second ]){
-  const outlineWidth = parseBorderWidth(second.width);
-  return {
-    ...buildSingleBorderStyle([first]),
-    margin: `${formatPixelAmount(outlineWidth)}`,
-    outline: `${formatPixelAmount(outlineWidth)} solid ${second.color}`
-  };
 }
 
 function buildMultiBorderStyle(borders){

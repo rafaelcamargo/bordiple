@@ -15,18 +15,6 @@ describe('Border Style Service', () => {
     });
   });
 
-  it('should build proper styles for two borders', () => {
-    const borders = [
-      { width: '0', color: '#DC424E' },
-      { width: '5', color: '#F2855A' }
-    ];
-    expect(buildStyle(borders)).toEqual({
-      margin: '5px',
-      border: '0 solid #DC424E',
-      outline: '5px solid #F2855A'
-    });
-  });
-
   it('should build proper styles for multi borders', () => {
     const borders = [
       { width: '5', color: '#DC424E' },
@@ -49,9 +37,8 @@ describe('Border Style Service', () => {
       { width: '1', color: '#DC424E' },
       { width: '-3', color: '#F2855A' }
     ])).toEqual({
-      margin: '0',
-      border: '1px solid #DC424E',
-      outline: '0 solid #F2855A'
+      margin: '1px',
+      boxShadow: '0 0 0 1px #DC424E,0 0 0 1px #F2855A'
     });
     expect(buildStyle([
       { width: '5', color: '#DC424E' },
