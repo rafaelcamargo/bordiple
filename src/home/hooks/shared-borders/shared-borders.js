@@ -1,18 +1,5 @@
-import { useState, useEffect } from 'react';
-
-const subscribers = [];
-  
-export const useSharedBorders = () => {
-  const hook = useState(buildInitialBorders());
-  const setBorders = newBorders => {
-    subscribers.forEach(subscriber => subscriber[1](newBorders));
-  };
-  useEffect(() => {
-    subscribers.push(hook);
-    return () => subscribers.splice(subscribers.indexOf(hook), 1);
-  }, []);
-  return { borders: hook[0], setBorders };
-};
+import { createSharedState } from '@src/base/factories/shared-state';
+export const useSharedBorders = createSharedState(buildInitialBorders());
 
 function buildInitialBorders(){
   return [

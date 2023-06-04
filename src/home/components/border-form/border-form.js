@@ -12,7 +12,7 @@ import {
 } from '@src/home/services/border-form/border-form';
 
 export const BorderForm = () => {
-  const { borders, setBorders } = useSharedBorders();
+  const [borders, setBorders] = useSharedBorders();
   const addBorder = () => setBorders([...borders, { width: 5, color: '#4AFFFF' }]);
   const removeBorder = borderIndex => {
     return isRemotionAllowed(borders) ?
