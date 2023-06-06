@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 export const createSharedState = initialState => {
   const subscribers = [];
-    
   return function(){
     const hook = useState(handleInitialState(subscribers, initialState));
     const setState = newState => {
@@ -21,5 +20,5 @@ function handleInitialState([firstSubscriber], initialState){
 }
 
 function copy(data){
-  JSON.parse(JSON.stringify(data));
+  return JSON.parse(JSON.stringify(data));
 }

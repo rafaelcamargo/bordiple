@@ -1,0 +1,39 @@
+@import '@src/vars.styl'
+
+.b-tabs-control
+  position relative
+  z-index 1
+
+.b-tabs-control
+  display flex
+  justify-content center
+  margin-bottom 30px
+  .b-tabs-control-btn
+    position relative
+    padding 8px 12px
+    background none
+    color alpha($color-grey-dark, .6)
+    font-size $font-size-xxs
+    font-weight bold
+    text-transform uppercase
+    border 0
+    cursor pointer
+    -webkit-appearance none
+    &.is-active
+      color $color-grey-dark
+      &:after
+        position absolute
+        content ' '
+        left 50%
+        bottom 0
+        width 20px
+        height 4px
+        background-color $color-purple
+        border-radius 2px
+        transform translateX(-50%)
+
+
+.b-tabs-content
+  display none
+  &.is-active
+    display initial

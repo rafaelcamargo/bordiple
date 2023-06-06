@@ -73,10 +73,8 @@ describe('Home View', () => {
     const borderColorInput = getByLabelText('border #3 color');
     await user.clear(borderWidthInput);
     await user.type(borderWidthInput, '10');
-    // Used fireEvent below because userEvent doesn’t
-    // support interactions with color inputs:
-    // https://github.com/testing-library/user-event/issues/423
-    fireEvent.input(borderColorInput, { target: { name: 'color', value: '#333333' }});
+    // fireEvent.input(borderColorInput, { target: { name: 'color', value: '#333333' }});
+    setInputValue(borderColorInput, 'color', '#333333');
     expect(getByLabelText('border #3 width').value).toEqual('10');
     expect(getByLabelText('border #3 color').value).toEqual('#333333');
     expect(window.getComputedStyle(getByTitle('preview')).boxShadow).toEqual([
@@ -90,6 +88,31 @@ describe('Home View', () => {
     ].join(' '));
   });
 
+  it('should optionally change preview preferences', async () => {
+    const { user, getByRole, getByLabelText, getByTitle, getByText } = await mount();
+    await user.click(getByRole('button', { name: 'Preferences' }));
+    const preferences = {
+      bgColor: {
+        element: getByLabelText('Background Color'),
+        value: '#222222'
+      },
+      fgColor: {
+        element: getByLabelText('Foreground Color'),
+        value: '#111111'
+      },
+      borderRadius: {
+        element: getByLabelText('Border Radius'),
+        value: '20'
+      }
+    };
+    Object.entries(preferences).forEach(([name, { element, value }]) => {
+      setInputValue(element, name, value);
+    });
+    expect(window.getComputedStyle(getByText('preview container')).backgroundColor).toEqual('rgb(34, 34, 34)');
+    expect(window.getComputedStyle(getByTitle('preview')).backgroundColor).toEqual('rgb(17, 17, 17)');
+    expect(window.getComputedStyle(getByTitle('preview')).borderRadius).toEqual('20%');
+  });
+
   it('should contain credits', async () => {
     const { container } = await mount();
     const footer = container.querySelector('#footer');
@@ -98,4 +121,12 @@ describe('Home View', () => {
       'https://rafaelcamargo.com'
     );
   });
+
+  function setInputValue(inputEl, name, color){
+    // Used fireEvent below because userEvent doesn’t
+    // support interactions with color/range inputs:
+    // https://github.com/testing-library/user-event/issues/423
+    // https://github.com/testing-library/user-event/issues/871
+    fireEvent.input(inputEl, { target: { name, value: color }});
+  }
 });

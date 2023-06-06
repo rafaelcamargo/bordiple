@@ -1,24 +1,39 @@
 import './home-view.styl';
 import { Container, Row, Col } from '@glorious/taslonic-react';
+import { Tabs, Tab } from '@src/base/components/tabs/tabs';
 import { Viewport } from '@src/base/components/viewport/viewport';
 import { BorderCode } from '@src/home/components/border-code/border-code';
 import { BorderForm } from '@src/home/components/border-form/border-form';
 import { BorderPreview } from '@src/home/components/border-preview/border-preview';
+import { PreferencesForm } from '@src/home/components/preferences-form/preferences-form';
 
 export const HomeView = () => {
   return (
     <Viewport>
       <BorderPreview />
-      <Container>
-        <Row>
-          <Col sm="6">
-            <BorderForm />
-          </Col>
-          <Col sm="6">
-            <BorderCode />
-          </Col>
-        </Row>
-      </Container>
+      <Tabs>
+        <Tab label="Borders">
+          <Container>
+            <Row>
+              <Col sm="6">
+                <BorderForm />
+              </Col>
+              <Col sm="6">
+                <BorderCode />
+              </Col>
+            </Row>
+          </Container>
+        </Tab>
+        <Tab label="Preferences">
+          <Container>
+            <Row align="center">
+              <Col sm="6">
+                <PreferencesForm />
+              </Col>
+            </Row>
+          </Container>
+        </Tab>
+      </Tabs>
     </Viewport>
   );
 };
