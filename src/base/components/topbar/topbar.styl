@@ -6,16 +6,20 @@
   left 0
   display flex
   align-items center
-  justify-content center
   height 80px
   background-color alpha($color-lightest, .85)
   backdrop-filter blur(12px)
   -webkit-backdrop-filter blur(12px)
   border-bottom 1px solid $color-grey-light
   z-index $layer-lowest
+
+.b-topbar-content
+  display flex
+  align-items center
+  justify-content space-between
   h1
-    width 160px
-    height 40px
+    width 150px
+    height 30px
     background-image url(@src/base/images/logo-bordiple.svg)
     background-repeat no-repeat
     text-indent -9999px
