@@ -118,7 +118,7 @@ describe('Home View', () => {
     const footer = container.querySelector('#footer');
     expect(within(footer).getByRole('link', { name: 'Rafael Camargo' })).toHaveAttribute(
       'href',
-      'https://rafaelcamargo.com'
+      'https://rafaelcamargo.com/?utm_source=bordiple'
     );
   });
 
