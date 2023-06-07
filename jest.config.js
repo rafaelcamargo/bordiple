@@ -16,7 +16,7 @@ module.exports = {
     '@environment$': `<rootDir>/${project.source.environments.root}/development.js`,
     '^.+\\.css$': `<rootDir>/${project.source.root}/base/mocks/raw-file.js`
   },
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: [
     '<rootDir>/jest.setup.js'
   ],
