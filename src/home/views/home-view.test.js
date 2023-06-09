@@ -94,7 +94,6 @@ describe('Home View', () => {
     const borderColorInput = getByLabelText('border #3 color');
     await user.clear(borderWidthInput);
     await user.type(borderWidthInput, '10');
-    // fireEvent.input(borderColorInput, { target: { name: 'color', value: '#333333' }});
     setInputValue(borderColorInput, 'color', '#333333');
     expect(getByLabelText('border #3 width').value).toEqual('10');
     expect(getByLabelText('border #3 color').value).toEqual('#333333');
@@ -112,7 +111,7 @@ describe('Home View', () => {
   it('should optionally change preview preferences', async () => {
     const { user, getByRole, getByLabelText, getByTitle, getByText } = await mount();
     await user.click(getByRole('button', { name: 'Preferences' }));
-    const preferences = {
+    setPreferences({
       bgColor: {
         element: getByLabelText('Background Color'),
         value: '#222222'
@@ -125,13 +124,34 @@ describe('Home View', () => {
         element: getByLabelText('Border Radius'),
         value: '20'
       }
-    };
-    Object.entries(preferences).forEach(([name, { element, value }]) => {
-      setInputValue(element, name, value);
     });
     expect(window.getComputedStyle(getByText('preview container')).backgroundColor).toEqual('rgb(34, 34, 34)');
     expect(window.getComputedStyle(getByTitle('preview')).backgroundColor).toEqual('rgb(17, 17, 17)');
     expect(window.getComputedStyle(getByTitle('preview')).borderRadius).toEqual('20%');
+  });
+
+  it('should generate a sharing link', async () => {
+    const { user, getByRole, getByLabelText } = await mount();
+    await user.click(getByLabelText('delete border #3'));
+    await user.click(getByRole('button', { name: 'Preferences' }));
+    setPreferences({
+      bgColor: {
+        element: getByLabelText('Background Color'),
+        value: '#222222'
+      },
+      borderRadius: {
+        element: getByLabelText('Border Radius'),
+        value: '20'
+      }
+    });
+    await user.click(getByRole('button', { name: 'Share' }));
+    expect(getByLabelText('sharing link')).toHaveValue([
+      `${window.location.origin}/`,
+      '?',
+      'b=W3sid2lkdGgiOjUsImNvbG9yIjoiI0RDNDI0RSJ9LHsid2lkdGgiOjUsImNvbG9yIjoiI0Y0ODU1NCJ9XQ',
+      '&',
+      'p=eyJiZ0NvbG9yIjoiIzIyMjIyMiIsImZnQ29sb3IiOiIjZmZmZmZmIiwiYm9yZGVyUmFkaXVzIjoiMjAifQ'
+    ].join(''));
   });
 
   it('should contain credits', async () => {
@@ -149,5 +169,11 @@ describe('Home View', () => {
     // https://github.com/testing-library/user-event/issues/423
     // https://github.com/testing-library/user-event/issues/871
     fireEvent.input(inputEl, { target: { name, value: color }});
+  }
+
+  function setPreferences(preferences){
+    Object.entries(preferences).forEach(([name, { element, value }]) => {
+      setInputValue(element, name, value);
+    });
   }
 });
