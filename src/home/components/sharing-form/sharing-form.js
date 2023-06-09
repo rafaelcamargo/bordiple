@@ -20,7 +20,7 @@ export const SharingForm = () => {
         </Col>
       </Row>
       <Row align="center">
-        <Col sm="4">
+        <Col xs="6" sm="4">
           <b-pilc data-text={link} data-style="display: block; width: 100%;"></b-pilc>
         </Col>
       </Row>
