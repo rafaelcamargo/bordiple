@@ -1,12 +1,18 @@
 import './border-code.styl';
+import '@src/base/components/pilc/pilc';
 import { useSharedBorders } from '@src/home/hooks/shared-borders/shared-borders';
 import { buildStyle } from '@src/home/services/border-style/border-style';
 
 export const BorderCode = () => {
   const [borders] = useSharedBorders();
+  const code = stringify(buildStyle(borders));
   return (
     <pre id="codeWrapper" className="b-border-code">
-      <code>{stringify(buildStyle(borders))}</code>
+      <code>{code}</code>
+      <b-pilc
+        data-text={code}
+        data-style="position: absolute; top: 10px; right: 10px;"
+      ></b-pilc>
     </pre>
   );
 };
