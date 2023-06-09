@@ -17,6 +17,12 @@ export async function asyncMount(component){
   return { user, ...result };
 }
 
+export function mockSearchParams(paramsString){
+  const { pathname } = window.location;
+  const url = paramsString ? `${pathname}?${paramsString}` : pathname;
+  window.history.pushState({}, '', url);
+}
+
 export async function renderWebComponent(html){
   document.body.innerHTML = html;
   await pause();

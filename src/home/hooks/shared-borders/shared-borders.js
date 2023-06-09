@@ -1,5 +1,10 @@
-import { createSharedState } from '@src/base/factories/shared-state';
-export const useSharedBorders = createSharedState(buildInitialBorders());
+import { createUrlSharedState } from '@src/base/factories/url-shared-state';
+
+export const useSharedBorders = createUrlSharedState({
+  initialState: buildInitialBorders(),
+  searchParamName: 'b',
+  parseSearchParam: param => JSON.parse(atob(param))
+});
 
 function buildInitialBorders(){
   return [

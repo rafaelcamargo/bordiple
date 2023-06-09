@@ -1,10 +1,14 @@
-import { asyncMount, fireEvent, within } from '@src/base/services/testing';
+import { asyncMount, fireEvent, mockSearchParams, within } from '@src/base/services/testing';
 import { HomeView } from './home-view';
 
 describe('Home View', () => {
   async function mount(){
     return await asyncMount(<HomeView />);
   }
+
+  afterEach(() => {
+    mockSearchParams('');
+  });
 
   it('should contain heading', async () => {
     const { getByRole } = await mount();
@@ -19,6 +23,23 @@ describe('Home View', () => {
     expect(getByLabelText('border #2 color').value).toEqual('#f48554');
     expect(getByLabelText('border #3 width').value).toEqual('5');
     expect(getByLabelText('border #3 color').value).toEqual('#fdbf59');
+  });
+
+  it('should optionally initialize borders and preferences with params found on URL', async () => {
+    const params = [
+      'b=W3sid2lkdGgiOiI4IiwiY29sb3IiOiIjMjIyMjIyIn1d',
+      'p=eyJiZ0NvbG9yIjoiIzExMTExMSIsImZnQ29sb3IiOiIjMDAwMEZGIiwiYm9yZGVyUmFkaXVzIjoiNSJ9'
+    ].join('&');
+    mockSearchParams(params);
+    const { container, getByLabelText, getByText, getByTitle } = await mount();
+    expect(getByLabelText('border #1 width').value).toEqual('8');
+    expect(getByLabelText('border #1 color').value).toEqual('#222222');
+    expect(window.getComputedStyle(getByText('preview container')).backgroundColor).toEqual('rgb(17, 17, 17)');
+    expect(window.getComputedStyle(getByTitle('preview')).backgroundColor).toEqual('rgb(0, 0, 255)');
+    expect(window.getComputedStyle(getByTitle('preview')).borderRadius).toEqual('5%');
+    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
+      'border: 8px solid #222222;'
+    );
   });
 
   it('should render a preview element containing the borders set in the form', async () => {
