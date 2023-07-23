@@ -1,0 +1,79 @@
+{
+  "lang": "en",
+  "dir": "ltr",
+  "name": "Bordiple",
+  "description": "CSS Multiple Border Generator Tool",
+  "start_url": "/?source=pwa",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/images/favicon-48x48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/assets/images/favicon-72x72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/assets/images/favicon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/assets/images/favicon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/assets/images/favicon-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/assets/images/favicon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/images/favicon-256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "/assets/images/favicon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/assets/images/favicon-512x512-maskable.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/banners-1270x760-01.png",
+      "type": "image/png",
+      "sizes": "1270x760",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/assets/images/banners-1270x760-02.png",
+      "type": "image/png",
+      "sizes": "1270x760",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/assets/images/banners-1270x760-03.png",
+      "type": "image/png",
+      "sizes": "1270x760",
+      "form_factor": "wide"
+    }
+  ]
+}
