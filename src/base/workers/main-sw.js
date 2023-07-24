@@ -24,8 +24,8 @@ function handleFetch(evt){
   evt.respondWith(
     fetch(evt.request).catch(() => {
       const requestURL = new URL(evt.request.url);
-      if(isRequestingHTML(evt.request)) return caches.match(buildHTMLCacheKey(requestURL.pathname));
-      if(ASSETS.includes(requestURL.pathname)) return caches.match(requestURL.pathname);
+      if(isRequestingHTML(evt.request)) return caches.match(buildHTMLCacheKey(requestURL.pathname), { ignoreVary: true });
+      if(ASSETS.includes(requestURL.pathname)) return caches.match(requestURL.pathname, { ignoreVary: true });
       return caches.match(evt.request);
     })
   );
