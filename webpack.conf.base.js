@@ -49,8 +49,12 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.join(__dirname, project.source.favicon.files),
+          from: path.join(__dirname, project.source.images.files),
           to: `${path.join(__dirname, project.dist.images.directory)}/[name][ext]`
+        },
+        {
+          from: path.join(__dirname, project.source.manifest.file),
+          to: path.join(__dirname, project.dist.root)
         }
       ],
     })

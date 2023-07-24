@@ -4,14 +4,21 @@
     "index": {
       "file": "src/index.html"
     },
-    "favicon": {
-      "files": "src/base/images/favicon-*.png"
+    "manifest": {
+      "file": "src/manifest.json"
     },
     "scripts": {
       "index": "src/index.js"
     },
+    "images": {
+      "files": "src/base/images/*.*"
+    },
     "tests": {
-      "files": ["src/**/*.js", "!src/**/mocks/**/*.js"]
+      "files": [
+        "src/**/*.js",
+        "!src/**/mocks/**/*.js",
+        "!src/base/workers/**/*.js"
+      ]
     },
     "environments": {
       "root": "environments"

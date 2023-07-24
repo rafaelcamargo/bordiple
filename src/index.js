@@ -1,3 +1,4 @@
+import(/* webpackChunkName: 'workers' */ '@src/base/services/workers');
 import '@glorious/taslonic-react/dist/taslonic.css';
 import './index.styl';
 import ReactDOM from 'react-dom';
