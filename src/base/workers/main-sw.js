@@ -23,18 +23,30 @@ function flushStaleAssets(evt){
 function handleFetch(evt){
   evt.respondWith(
     fetch(evt.request).catch(() => {
-      const requestURL = new URL(evt.request.url);
-      if(isRequestingHTML(evt.request)) return caches.match(buildHTMLCacheKey(requestURL.pathname), { ignoreVary: true });
-      if(ASSETS.includes(requestURL.pathname)) return caches.match(requestURL.pathname, { ignoreVary: true });
-      return caches.match(evt.request);
+      return isGETRequest(evt.request) && handleFetchError(evt.request);
     })
   );
+}
+
+function isGETRequest(request){
+  return request.method == 'GET';
+}
+
+function handleFetchError(request){
+  const requestURL = new URL(request.url);
+  if(isRequestingHTML(request)) return getHTMLFromCache('/index.html');
+  if(ASSETS.includes(requestURL.pathname)) return caches.match(requestURL.pathname, { ignoreVary: true });
+  return caches.match(request);
 }
 
 function isRequestingHTML({ headers }){
   return headers.get('accept').includes('text/html');
 }
 
-function buildHTMLCacheKey(pathname){
-  return [pathname, 'index.html'].join('/').replace(/\/\//g, '/');
+function getHTMLFromCache(htmlFilepath){
+  return caches.match(htmlFilepath, { ignoreVary: true }).then(cachedResponse => {
+    if (cachedResponse) return cachedResponse.text();
+  }).then(htmlData => {
+    return new Response(htmlData, { headers: { 'Content-Type': 'text/html' } });
+  });
 }
