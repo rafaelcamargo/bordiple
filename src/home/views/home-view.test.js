@@ -6,6 +6,10 @@ describe('Home View', () => {
     return await asyncMount(<HomeView />);
   }
 
+  function getCodeElement(container){
+    return container.querySelector('#codeWrapper > code');
+  }
+
   afterEach(() => {
     mockSearchParams('');
   });
@@ -37,9 +41,7 @@ describe('Home View', () => {
     expect(window.getComputedStyle(getByText('preview container')).backgroundColor).toEqual('rgb(17, 17, 17)');
     expect(window.getComputedStyle(getByTitle('preview')).backgroundColor).toEqual('rgb(0, 0, 255)');
     expect(window.getComputedStyle(getByTitle('preview')).borderRadius).toEqual('5%');
-    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
-      'border: 8px solid #222222;'
-    );
+    expect(getCodeElement(container).innerHTML).toEqual('border: 8px solid #222222;');
   });
 
   it('should render a preview element containing the borders set in the form', async () => {
@@ -53,9 +55,12 @@ describe('Home View', () => {
 
   it('should show the css code related to the generated preview', async () => {
     const { container } = await mount();
-    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
-      'margin: 15px; box-shadow: 0 0 0 5px #dc424e, 0 0 0 10px #f48554, 0 0 0 15px #fdbf59;'
-    );
+    const code = `margin: 15px;
+box-shadow: 
+  0 0 0 5px #dc424e,
+  0 0 0 10px #f48554,
+  0 0 0 15px #fdbf59;`;
+    expect(getCodeElement(container).innerHTML).toEqual(code);
   });
 
   it('should optionally remove a border', async () => {
@@ -66,9 +71,11 @@ describe('Home View', () => {
       '0 0 0 5px #F48554',
       '0 0 0 10px #FDBF59'
     ].join(','));
-    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent(
-      'margin: 10px; box-shadow: 0 0 0 5px #f48554, 0 0 0 10px #fdbf59;'
-    );
+    const code = `margin: 10px;
+box-shadow: 
+  0 0 0 5px #f48554,
+  0 0 0 10px #fdbf59;`;
+    expect(getCodeElement(container).innerHTML).toEqual(code);
   });
 
   it('should optionally add a border', async () => {
@@ -82,10 +89,13 @@ describe('Home View', () => {
       '0 0 0 15px #FDBF59',
       '0 0 0 20px #4AFFFF'
     ].join(','));
-    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
-      'margin: 20px;',
-      'box-shadow: 0 0 0 5px #dc424e, 0 0 0 10px #f48554, 0 0 0 15px #fdbf59, 0 0 0 20px #4affff;'
-    ].join(' '));
+    const code = `margin: 20px;
+box-shadow: 
+  0 0 0 5px #dc424e,
+  0 0 0 10px #f48554,
+  0 0 0 15px #fdbf59,
+  0 0 0 20px #4affff;`;
+    expect(getCodeElement(container).innerHTML).toEqual(code);
   });
 
   it('should optionally edit a border', async () => {
@@ -102,10 +112,12 @@ describe('Home View', () => {
       '0 0 0 10px #F48554',
       '0 0 0 20px #333333'
     ].join(','));
-    expect(container.querySelector('#codeWrapper > code')).toHaveTextContent([
-      'margin: 20px;',
-      'box-shadow: 0 0 0 5px #dc424e, 0 0 0 10px #f48554, 0 0 0 20px #333333;'
-    ].join(' '));
+    const code = `margin: 20px;
+box-shadow: 
+  0 0 0 5px #dc424e,
+  0 0 0 10px #f48554,
+  0 0 0 20px #333333;`;
+    expect(getCodeElement(container).innerHTML).toEqual(code);
   });
 
   it('should optionally change preview preferences', async () => {
