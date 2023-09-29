@@ -16,13 +16,13 @@ describe('Pilc', () => {
     const text = 'some text';
     await mount({ text });
     const button = getButton();
-    window.navigator.clipboard.writeText = jest.fn(() => Promise.resolve());
     button.click();
-    expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(text);
     await pause();
     expect(button.textContent).toEqual('Copied!');
     await pause(1500);
     expect(button.textContent).toEqual('Copy');
+    const copiedText = await window.navigator.clipboard.readText();
+    expect(copiedText).toEqual(text);
   });
 
   it('should optionally set style', async () => {
