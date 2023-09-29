@@ -1,20 +1,20 @@
 import ENV from '@environment';
-import GAnalytics from '@glorious/analytics';
-import { GAnalyticsMock, ganalyticsInstanceMock } from '@src/base/mocks/glorious-analytics';
+import Staly from '@compilorama/staly';
+import { StalyMock, stalyInstanceMock } from '@src/base/mocks/staly';
 import analyticsService from './analytics';
 
-jest.mock('@glorious/analytics');
-GAnalytics.mockImplementation(GAnalyticsMock);
+jest.mock('@compilorama/staly');
+Staly.mockImplementation(StalyMock);
 
 describe('Analytics Service', () => {
   beforeEach(() => {
-    ganalyticsInstanceMock.init = jest.fn();
-    ganalyticsInstanceMock.trackPageview = jest.fn();
+    stalyInstanceMock.init = jest.fn();
+    stalyInstanceMock.trackPageview = jest.fn();
   });
 
   it('should initialize glorious analytics', () => {
     analyticsService.init();
-    expect(ganalyticsInstanceMock.init).toHaveBeenCalledWith(
+    expect(stalyInstanceMock.init).toHaveBeenCalledWith(
       ENV.ANALYTICS.PLAUSIBLE.DOMAIN, {
         trackLocalhost: false
       }
@@ -24,6 +24,6 @@ describe('Analytics Service', () => {
   it('should track page view', () => {
     analyticsService.init();
     analyticsService.trackPageView();
-    expect(ganalyticsInstanceMock.trackPageview).toHaveBeenCalledTimes(1);
+    expect(stalyInstanceMock.trackPageview).toHaveBeenCalledTimes(1);
   });
 });
