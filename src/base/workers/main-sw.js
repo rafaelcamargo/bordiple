@@ -21,18 +21,19 @@ function flushStaleAssets(evt){
 }
 
 function handleFetch(evt){
-  evt.respondWith(
-    fetch(evt.request).catch(() => {
-      return isGETRequest(evt.request) && handleFetchError(evt.request);
-    })
-  );
+  const response = navigator.onLine ? processRequest(evt.request) : handleFetchFailure(evt.request);
+  evt.respondWith(response);
 }
 
-function isGETRequest(request){
-  return request.method == 'GET';
+function processRequest(request){
+  return fetch(request).catch(() => handleFetchFailure(request));
 }
 
-function handleFetchError(request){
+function handleFetchFailure(request){
+  return request.method == 'GET' && retrieveCachedRequest(request);
+}
+
+function retrieveCachedRequest(request){
   const requestURL = new URL(request.url);
   if(isRequestingHTML(request)) return getHTMLFromCache('/index.html');
   if(ASSETS.includes(requestURL.pathname)) return caches.match(requestURL.pathname, { ignoreVary: true });

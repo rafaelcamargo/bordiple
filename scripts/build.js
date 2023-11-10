@@ -18,15 +18,14 @@ function onCompilationSuccess(err, stats){
 function formatAssets(assets){
   return JSON.stringify([
     ...assets.map(filepath => `/${filepath}`),
-    ...getThirdPartyAssetUrls(),
-    getServiceWorkerAssetUrl()
+    ...getThirdPartyAssetUrls()
   ]);
 }
 
 function generateServiceWorkFile(assets){
   const originDir = path.resolve(__dirname, '../src/base/workers');
   const targetDir = path.resolve(__dirname, '../dist');
-  const filename = getServiceWorkerAssetUrl();
+  const filename = '/main-sw.js';
   const data = fs.readFileSync([originDir, filename].join(''), 'utf-8');
   fs.writeFileSync(
     [targetDir, filename].join(''),
@@ -40,10 +39,6 @@ function getThirdPartyAssetUrls(){
     'https://rsms.me/inter/font-files/Inter-Bold.woff2?v=3.19',
     'https://rsms.me/inter/font-files/Inter-Light.woff2?v=3.19'
   ];
-}
-
-function getServiceWorkerAssetUrl(){
-  return '/main-sw.js'
 }
 
 init();
