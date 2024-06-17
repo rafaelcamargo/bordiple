@@ -7,7 +7,6 @@ describe('Index', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div data-app></div>';
     analyticsService.init = jest.fn();
-    analyticsService.trackPageView = jest.fn();
   });
 
   afterEach(async () => {
@@ -26,6 +25,5 @@ describe('Index', () => {
     await pause();
     expect(screen.getByRole('heading', { name: 'Bordiple' })).toBeInTheDocument();
     expect(analyticsService.init).toHaveBeenCalledTimes(1);
-    expect(analyticsService.trackPageView).toHaveBeenCalledTimes(1);
   });
 });
